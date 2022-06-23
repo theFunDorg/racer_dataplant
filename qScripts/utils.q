@@ -1,0 +1,1 @@
+.ut.tbls:{tabes[]!count each get each tables[]}
