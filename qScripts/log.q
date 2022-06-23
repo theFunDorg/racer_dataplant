@@ -13,7 +13,10 @@
  memClose:()
  );
  
+// log-err and log-out messaging functions defined
 .lg.info:{show "[",(string .z.P),"] - ",x};
+.lg.out:{-1 "[",$:[.z.d]," - ",$:[.z.n]," - stdout] : ",x;};
+.lg.err:{-2 "[",$:[.z.p]," - ",2_$:[.z.n]," - stderr ] : ",x;};
 
 // Define .z.po function
 .lg.zpo:{
@@ -42,10 +45,6 @@
   .lg.out "The user ",(string usr)," on handle ",(string x)," has disconnected";
  };
  
- 
-// log-err and log-out messaging functions defined
-.lg.out:{-1 "[",$:[.z.d]," - ",$:[.z.n]," - stdout] : ",x;};
-.lg.err:{-2 "[",$:[.z.p]," - ",2_$:[.z.n]," - stderr ] : ",x;};
 
 
 // Adding .z.po and .z.pc functions to process

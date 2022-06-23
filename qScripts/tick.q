@@ -21,17 +21,9 @@
 
 /q tick.q SRC [DST] [-p 5010] [-o h]
 
-.lg.info:{show "[",(string .z.P),"] - ",x};
 
-/ Take inputs to proc
-.inp:.Q.opt .z.x;
-.inp.tbls:first .inp.tbls;
-.inp.lgdir:first .inp.lgdir;
-.inp.qDir:getenv `QDIR;
-.lg.info"Loaded input vars";
-
-system"l ",.inp.qDir,"tick/",.inp.tbls,".q";
-system"l ",.inp.qDir,"tick/u.q";
+system"l tick/sym.q";
+system"l tick/u.q";
 .lg.info"Finished loading  support scripts";
 
 \d .u
@@ -53,22 +45,6 @@ tick:{
     };
 
 endofday:{end d;d+:1;if[l;hclose l;l::0(`.u.ld;d)]};
-
-ts:{
-   if[d<x;
-     if[d<x-1;
-        system"t 0";
-        '"more than one day?"];
-   endofday[]]};
-
-.z.ts:{
-  ts .z.D;
-  if[.z.p>=t60;
-    `.u.T60 insert ( .z.p,(get w),(get T) );
-	t60:: .z.p+`minute$1];
- };
-
-t60:.z.p;
 system"t 1000";
 
 upd:{[t;x]
@@ -96,9 +72,8 @@ upd:{[t;x]
 .ipc.zpc,:`.u.zpc;
 / Loading logging script
 .lg.info"Finished setting zpc/zpo, po/pc";
-system"l ",.inp.qDir,"logger.q";
 .lg.info"Loaded logger.q";
-.u.tick[.inp.tbls;.inp.lgdir];
+//.u.tick[.inp.tbls;.inp.lgdir];
 .lg.info"initialised .u.tick";
 
 \

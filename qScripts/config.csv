@@ -1,0 +1,7 @@
+procName,procType,port,packages,subscribe,publish
+subROS,feedhandler,5500,ros.q,,tbl1;tbl2
+tickerplant,tick,5501,,
+engine,rdb,5502,engine.q;file.q,tbl1;tbl2,
+rdb,rdb,5503,,tbl1;tbl2,,
+pubROS,rdb,5504,ros.q,tbl1;tbl2,,
+logger,rdb,5505,,,,
