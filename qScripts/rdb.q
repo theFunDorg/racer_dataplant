@@ -1,11 +1,9 @@
 if[not "w"=first string .z.o;system "sleep 1"];
 
 / function for connection to ticker plant for (schema;(logcount;log))
-.rdb.tpConn:{
-  h:(hopen .cfg.config[`tickerplant][`port]);
-  schema:{y(`.u.sub;x;`)}[;h] each .cfg.config[.cfg.procName][`subscribe];
-  lg:h"(`.u `i`L)";
-  .rdb.rep .(schema;lg)
+.rdb.subscribe:{
+  .rdb.schemas:.rdb.tpHandle(`.tick.subscribe;.cfg.config[.cfg.procName][`subscribe];.z.w);
+  {x set .rdb.schemas[x]}each key .rdb.schemas;
  }
 
 / init schema and sync up from log file;cd to hdb(so client save can run)
@@ -16,8 +14,19 @@ if[not "w"=first string .z.o;system "sleep 1"];
 .z.po:{[hndl]{x[y]}[;hndl] each get each .ipc.zpo};
 .z.pc:{[hndl]{x[y]}[;hndl] each get each .ipc.zpc};
 
- / connect to ticker plant for (schema;(logcount;log))
-.rdb.tpConn[]
+/ connect to ticker plant for (schema;(logcount;log))
  
 / Setting upd to insert after log replay
 upd:insert;
+
+
+.rdb.init:{[]
+  .lg.info"Connecting to tickerplant";
+  .rdb.tpHandle:hopen .cfg.config[`tickerplant][`port];
+  .lg.info"Tickerplant connection opened";
+  .lg.info"Subscribing and getting schemas";
+  .rdb.subscribe`;
+  .lg.info"Subscription completed";
+
+  };
+.rdb.init`

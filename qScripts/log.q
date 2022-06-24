@@ -14,7 +14,7 @@
  );
  
 // log-err and log-out messaging functions defined
-.lg.info:{show "[",(string .z.P),"] - ",x};
+.lg.info:{show "[",(string .z.P)," - INFO ] - ",x};
 .lg.out:{-1 "[",$:[.z.d]," - ",$:[.z.n]," - stdout] : ",x;};
 .lg.err:{-2 "[",$:[.z.p]," - ",2_$:[.z.n]," - stderr ] : ",x;};
 

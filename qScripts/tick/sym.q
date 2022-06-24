@@ -1,52 +1,39 @@
-quote:([]
- time:`timespan$();
- sym:`g#`symbol$();
- bid:`float$();
- ask:`float$();
- bsize:`long$();
- asize:`long$();
- mode:();
- ex:()
- );
- 
-trade:([]
- time:`timespan$();
- sym:`g#`symbol$(); 
- price:`float$();
- size:`int$();
- stop:`boolean$();
- cond:`char$();
- ex:`char$()
- );
-
-aggTQ:([]
- time:`timespan$();
- sym:`g#`symbol$();		/Both Tables
- maxP:`float$();		/From Trade
- minP:`float$();		/From Trade
- Vol:`long$();			/From Trade
- maxBid:`float$();		/From Quote
- minAsk:`float$()		/From Quote
- );
-
- tt:([]
-  time:`timespan$();
-  sym:`$();
+leftEngineActuate:([]
   timestamp:`timestamp$();
-  title:();
-  ups:`long$();
-  downs:`long$();
-  id:();
-  url:();
-  comms_num:`long$();
-  body:()
+  l_elevon:`int$();
+  r_elevon:`int$();
+  v_nozzle:`int$();
+  h_nozzle:`int$();
+  edf:`int$()
   );
- 
- cc:([]
-  time:`timespan$();
-  sym:`$();
+
+leftEngineSense:([]
   timestamp:`timestamp$();
-  ups:`long$();
-  downs:`long$();
-  body:()
+  height:`int$();
+  ax:`float$();
+  ay:`float$();
+  az:`float$();
+  gx:`float$();
+  gy:`float$();
+  gz:`float$()
+  );
+
+rightEngineSense:leftEngineSense;
+rightEngineActuate:leftEngineActuate;
+
+computeActuate:([]
+  timestamp:`timestamp$();
+  l_elevon:`int$();
+  r_elevon:`int$()
+  );
+
+computeSense:([]
+  timestamp:`timestamp$();
+  height:`int$();
+  ax:`float$();
+  ay:`float$();
+  az:`float$();
+  gx:`float$();
+  gy:`float$();
+  gz:`float$()
   );

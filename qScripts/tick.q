@@ -23,16 +23,48 @@
 
 
 system"l tick/sym.q";
-system"l tick/u.q";
-.lg.info"Finished loading  support scripts";
+.lg.info"Finished loading schemas";
 
+.z.pc:{del[;x]each t};
+
+.tick.init:{
+  .tick.tblCounts:tables[]!count each get each tables[];
+  .tick.subscribers::t!(count t::tables`.)#();
+
+  };
+.tick.deleteSub:{[handle]
+  {.tick.subscribers[x]:distinct .tick.subscribers[x],y}[;handle] each tbls;
+  };
+
+.tick.shutdown:{
+  };
+
+
+.tick.subscribe:{[tbls;handle]
+  if[tbls~`;tbls:key .tick.subscribers];
+  {.tick.subscribers[x]:distinct .tick.subscribers[x],y}[;handle] each tbls;
+  :tbls!get each tbls
+  };
+
+.tick.publish:{[tbl;data]
+  if[not -16=type data[0;0]
+    data:.z.P,data
+  ];
+  .tick.subscribers[tbl]:\(`upd;data);
+  };
+
+.tick.init`
+\
 \d .u
-ld:{
-  if[not type key L::`$(-10_string L),string x;
-    .[L;();:;()]];
-  i::j::-11!(-2;L);
-  if[0<=type i;-2 (string L)," is a corrupt log. Truncate to length ",(string last i)," and restart";exit 1];
-  hopen L};
+  del:{w[x]_:w[x;;0]?y};
+
+pub:{[t;x]{[t;x;w]if[count x:sel[x]w 1;(neg first w)(`upd;t;x)]}[t;x]each w t}
+
+add:{$[(count w x)>i:w[x;;0]?.z.w;.[`.u.w;(x;i;1);union;y];w[x],:enlist(.z.w;y)];(x;$[99=type v:value x;sel[v]y;0#v])}
+
+sub:{if[x~`;:sub[;y]each t];if[not x in t;'x];del[x].z.w;add[x;y]}
+
+end:{(neg union/[w[;;0]])@\:(`.u.end;x)}
 
 tick:{
     init[];
@@ -43,9 +75,6 @@ tick:{
        L::`$":",y,"/",x,10#".";
        l::ld d]
     };
-
-endofday:{end d;d+:1;if[l;hclose l;l::0(`.u.ld;d)]};
-system"t 1000";
 
 upd:{[t;x]
   ts"d"$a:.z.P;
@@ -59,20 +88,13 @@ upd:{[t;x]
 
 
 \d .
-.lg.info"Finished in .u namespace";
 
 / Adding .z.po and .z.pc function handlers
  .z.po:{[hndl]{x[y]}[;hndl] each get each .ipc.zpo};
  .z.pc:{[hndl]{x[y]}[;hndl] each get each .ipc.zpc};
 
-/ initialising .z.po, .z.pc function lists
-.ipc.zpc:();
-.ipc.zpo:();
 
-.ipc.zpc,:`.u.zpc;
-/ Loading logging script
-.lg.info"Finished setting zpc/zpo, po/pc";
-.lg.info"Loaded logger.q";
+
 //.u.tick[.inp.tbls;.inp.lgdir];
 .lg.info"initialised .u.tick";
 
