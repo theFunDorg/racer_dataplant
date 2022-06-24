@@ -9,3 +9,6 @@ echo "Welcome to KDB+ on Docker"
 echo $#
 alias q="rlwrap q"
 exec "$@"
+
+
+export STDOUTDIR=/

@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   tickerplant:
-    image: docker-kdb
+    image: racer-kdb
     command: q qScripts/tick.q -p 5678 -tbls sym -lgdir /lgdir
     hostname: tickerplant
     ports:
@@ -11,40 +11,73 @@ services:
     environment:
       QDIR: /qScripts/
     volumes:
-      - ../dbDir/:/dbDir
       - ./lgdir/:/lgdir
+      - ./kdbLogs/:/kdbLogs
+      - ./logOuts/:/logOuts
 
   rdb1:
-    image: docker-kdb
+    image: racer-kdb
     command: q qScripts/tick/r.q -p 5680 -pTP :tickerplant:5678 -sub tt,cc
     hostname: rdb1
     working_dir: /
     environment:
       QDIR: /qScripts/
     volumes:
-      - ../dbDir/:/dbDir
       - ./lgdir/:/lgdir
+      - ./kdbLogs/:/kdbLogs
+      - ./logOuts/:/logOuts
+
 
   rdb2:
-    image: docker-kdb
+    image: racer-kdb
     command: q qScripts/tick/r.q -p 5681 -pTP :tickerplant:5678 -sub tt,cc
     hostname: rdb2
     working_dir: /
     environment:
       QDIR: /qScripts/
     volumes:
-      - ../dbDir/:/dbDir
       - ./lgdir/:/lgdir
+      - ./kdbLogs/:/kdbLogs
+      - ./logOuts/:/logOuts
 
-  gateway:
-    image: docker-kdb
-    command: q qScripts/gateway.q -p 7890 -rdbs rdb1:5680,rdb2:5681
-    hostname: gateway
+  engine:
+    image: racer-kdb
+    command: q qScripts/tick.q -p 5678 -tbls sym -lgdir /lgdir
+    hostname: tickerplant
     ports:
-      - 7890:7890
+      - 5678:5678
     working_dir: /
     environment:
       QDIR: /qScripts/
     volumes:
-      - ../dbDir/:/dbDir
       - ./lgdir/:/lgdir
+      - ./kdbLogs/:/kdbLogs
+      - ./logOuts/:/logOuts
+
+  pubROS:
+    image: racer-kdb
+    command: q qScripts/tick.q -p 5678 -tbls sym -lgdir /lgdir
+    hostname: tickerplant
+    ports:
+      - 5678:5678
+    working_dir: /
+    environment:
+      QDIR: /qScripts/
+    volumes:
+      - ./lgdir/:/lgdir
+      - ./kdbLogs/:/kdbLogs
+      - ./logOuts/:/logOuts
+
+  subROS:
+    image: racer-kdb
+    command: q qScripts/feedhandler.q -p 5678 -tbls sym -lgdir /lgdir
+    hostname: tickerplant
+    ports:
+      - 5678:5678
+    working_dir: /
+    environment:
+      QDIR: /qScripts/
+    volumes:
+      - ./lgdir/:/lgdir
+      - ./kdbLogs/:/kdbLogs
+      - ./logOuts/:/logOuts

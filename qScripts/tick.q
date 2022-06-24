@@ -25,7 +25,7 @@
 system"l tick/sym.q";
 .lg.info"Finished loading schemas";
 
-.z.pc:{del[;x]each t};
+.z.pc:{.tick.deleteSub[x]};
 
 .tick.init:{
   .tick.tblCounts:tables[]!count each get each tables[];
@@ -33,10 +33,11 @@ system"l tick/sym.q";
 
   };
 .tick.deleteSub:{[handle]
-  {.tick.subscribers[x]:distinct .tick.subscribers[x],y}[;handle] each tbls;
+  {.tick.subscribers[x]:distinct .tick.subscribers[x] except y}[;handle] each key .tick.subscribers;
   };
 
 .tick.shutdown:{
+  exit 0
   };
 
 
@@ -47,13 +48,13 @@ system"l tick/sym.q";
   };
 
 .tick.publish:{[tbl;data]
-  if[not -16=type data[0;0]
+  if[not -12h=type first data;
     data:.z.P,data
   ];
-  .tick.subscribers[tbl]:\(`upd;data);
+  {[hndl;tbl;data]hndl(`upd;tbl;data)}[;tbl;data] each .tick.subscribers[tbl];
   };
 
-.tick.init`
+.tick.init[];
 \
 \d .u
   del:{w[x]_:w[x;;0]?y};

@@ -2,7 +2,7 @@ if[not "w"=first string .z.o;system "sleep 1"];
 
 / function for connection to ticker plant for (schema;(logcount;log))
 .rdb.subscribe:{
-  .rdb.schemas:.rdb.tpHandle(`.tick.subscribe;.cfg.config[.cfg.procName][`subscribe];.z.w);
+  .rdb.schemas:.rdb.tpHandle({.tick.subscribe[x;.z.w]}; .cfg.config[.cfg.procName][`subscribe]);
   {x set .rdb.schemas[x]}each key .rdb.schemas;
  }
 
@@ -17,7 +17,7 @@ if[not "w"=first string .z.o;system "sleep 1"];
 / connect to ticker plant for (schema;(logcount;log))
  
 / Setting upd to insert after log replay
-upd:insert;
+upd:upsert;
 
 
 .rdb.init:{[]
@@ -29,4 +29,4 @@ upd:insert;
   .lg.info"Subscription completed";
 
   };
-.rdb.init`
+.rdb.init`;
