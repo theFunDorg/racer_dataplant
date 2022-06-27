@@ -1,0 +1,9 @@
+'2022.06.24T18:38:44.489 length
+  [2]  /home/sean/racer_dataplant/qScripts/skeleton.q:18: system "p ",string .cfg.config[.cfg.procName][`port];
+                                                                             ^
+'2022.06.24T18:39:16.451 length
+  [2]  /home/sean/racer_dataplant/qScripts/skeleton.q:18: system "p ",string .cfg.config[.cfg.procName][`port];
+                                                                             ^
+'2022.06.24T18:41:14.603 length
+  [2]  /home/sean/racer_dataplant/qScripts/skeleton.q:18: system "p ",string .cfg.config[.cfg.procName][`port];
+                                                                             ^
