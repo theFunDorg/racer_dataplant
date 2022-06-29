@@ -1,77 +1,10 @@
 version: "3.7"
 
 services:
-  tickerplant:
+  racer_dataplant:
     image: racer-kdb
-    command: q qScripts/tick.q -p 5678 -tbls sym -lgdir /lgdir
-    hostname: tickerplant
-    ports:
-      - 5678:5678
-    working_dir: /
-    environment:
-      QDIR: /qScripts/
-    volumes:
-      - ./lgdir/:/lgdir
-      - ./kdbLogs/:/kdbLogs
-      - ./logOuts/:/logOuts
-
-  rdb1:
-    image: racer-kdb
-    command: q qScripts/tick/r.q -p 5680 -pTP :tickerplant:5678 -sub tt,cc
-    hostname: rdb1
-    working_dir: /
-    environment:
-      QDIR: /qScripts/
-    volumes:
-      - ./lgdir/:/lgdir
-      - ./kdbLogs/:/kdbLogs
-      - ./logOuts/:/logOuts
-
-
-  rdb2:
-    image: racer-kdb
-    command: q qScripts/tick/r.q -p 5681 -pTP :tickerplant:5678 -sub tt,cc
-    hostname: rdb2
-    working_dir: /
-    environment:
-      QDIR: /qScripts/
-    volumes:
-      - ./lgdir/:/lgdir
-      - ./kdbLogs/:/kdbLogs
-      - ./logOuts/:/logOuts
-
-  engine:
-    image: racer-kdb
-    command: q qScripts/tick.q -p 5678 -tbls sym -lgdir /lgdir
-    hostname: tickerplant
-    ports:
-      - 5678:5678
-    working_dir: /
-    environment:
-      QDIR: /qScripts/
-    volumes:
-      - ./lgdir/:/lgdir
-      - ./kdbLogs/:/kdbLogs
-      - ./logOuts/:/logOuts
-
-  pubROS:
-    image: racer-kdb
-    command: q qScripts/tick.q -p 5678 -tbls sym -lgdir /lgdir
-    hostname: tickerplant
-    ports:
-      - 5678:5678
-    working_dir: /
-    environment:
-      QDIR: /qScripts/
-    volumes:
-      - ./lgdir/:/lgdir
-      - ./kdbLogs/:/kdbLogs
-      - ./logOuts/:/logOuts
-
-  subROS:
-    image: racer-kdb
-    command: q qScripts/feedhandler.q -p 5678 -tbls sym -lgdir /lgdir
-    hostname: tickerplant
+    command: bash entrypoint.sh
+    hostname: kdbplant
     ports:
       - 5678:5678
     working_dir: /

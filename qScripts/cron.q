@@ -37,3 +37,6 @@
   };
 
   funcName:{show x+y}
+
+// TODO: Add a monadic/polyadic handler function, that get called when the cron function is called 
+// This will provide some execution control to give a .lg.error output so it's clear what's up
