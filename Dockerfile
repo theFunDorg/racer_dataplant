@@ -9,7 +9,8 @@ ENV PATH ${PATH}:${QHOME}/l32/
 
 # Refresh / Update the base image using alpine's package manager "apk", and binutils to allow use of e.g. tar/ar while building
 RUN apk update \
-&& apk add --update binutils readline
+&& apk add --update binutils readline \
+&& apk add bash
 #RUN apk --no-cache add rlwrap --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
 ## apk add --update rlwrap
@@ -24,16 +25,19 @@ RUN LIBC32_DEB=libc6-i386_2.19-18+deb8u10_amd64.deb \
 	&& rm -rf /var/lib/apk/lists/*
 
 # Ensure we have your our zipped version of q for linux in the same folder as this Dockerfile, and copy it
+RUN mkdir /racer_dataplant
 COPY q.zip .
-COPY entrypoint.sh /entrypoint.sh
-COPY qScripts/ /qScripts
+COPY entrypoint.sh racer_dataplant/entrypoint.sh
+COPY daemon.sh racer_dataplant/daemon.sh
+COPY qScripts/ racer_dataplant/qScripts
 
 # Unzip q for linux to the root ('/'), change file / directory permissions, finally clean up by removing unused folders / utilities
 RUN unzip /q.zip \
-&& chown -R root /q; chmod 755 /q/l32/q \
+&& chown -R root /q \
+&& chmod 755 /q/l32/q \
 && rm /q.zip \
 && apk del binutils 
 
-WORKDIR /qScripts
+WORKDIR /racer_dataplant
 # EXPOSE  5001
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/racer_dataplant/entrypoint.sh"]

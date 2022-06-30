@@ -3,14 +3,18 @@ version: "3.7"
 services:
   racer_dataplant:
     image: racer-kdb
-    command: bash entrypoint.sh
+    command: bash /racer_dataplant/daemon.sh
     hostname: kdbplant
     ports:
-      - 5678:5678
+      - 5001:5001
+      - 5002:5002
+      - 5003:5003
+      - 5004:5004
+      - 5005:5005
     working_dir: /
     environment:
-      QDIR: /qScripts/
+      QDIR: /racer_dataplant/qScripts/
     volumes:
-      - ./lgdir/:/lgdir
-      - ./kdbLogs/:/kdbLogs
-      - ./logOuts/:/logOuts
+      - ./lgdir/:/racer_dataplant/lgdir
+      - ./kdbLogs/:/racer_dataplant/kdbLogs
+      - ./logOuts/:/racer_dataplant/logOuts

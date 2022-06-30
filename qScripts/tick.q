@@ -19,7 +19,7 @@ system"l schemas.q";
   };
 
 .tick.subscribe:{[tbls;handle]
-  if[tbls~`;tbls:key .tick.subscribers];
+  if[tbls[0]~`;tbls:except[key .tick.subscribers;`]];
   {.tick.subscribers[x]:distinct .tick.subscribers[x],y}[;handle] each tbls;
   :tbls!get each tbls
   };
