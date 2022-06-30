@@ -1,9 +1,0 @@
-KDB+ 4.0 2021.07.12 Copyright (C) 1993-2021 Kx Systems
-l64/ 8(16)core 7831MB sean claptop 127.0.1.1 EXPIRE 2022.08.14 s.coughlan15@gmail.com KOD #5005302
-
-"[2022.06.24D18:40:34.496126000 - INFO ] - Starting loading tick"
-"[2022.06.24D18:40:34.496233000 - INFO ] - TickerPlant Starting"
-"[2022.06.24D18:40:34.496335000 - INFO ] - Finished loading schemas"
-"[2022.06.24D18:40:34.496488000 - INFO ] - Finished loading tick"
-q)q)q)q)`computeActuate`computeSense`leftEngineActuate`leftEngineSense`rightEngineActuate`rightEngineSense
-q)
