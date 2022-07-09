@@ -40,4 +40,7 @@ RUN unzip /q.zip \
 
 WORKDIR /racer_dataplant
 # EXPOSE  5001
+
+RUN echo 'root:Docker!' | chpasswd
+
 ENTRYPOINT ["/racer_dataplant/entrypoint.sh"]

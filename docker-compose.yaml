@@ -6,11 +6,12 @@ services:
     command: bash /racer_dataplant/daemon.sh
     hostname: kdbplant
     ports:
-      - 5001:5001
-      - 5002:5002
-      - 5003:5003
-      - 5004:5004
-      - 5005:5005
+      - 5500:5500
+      - 5501:5501
+      - 5502:5502
+      - 5503:5503
+      - 5504:5504
+      - 5505:5505
     working_dir: /
     environment:
       QDIR: /racer_dataplant/qScripts/
