@@ -1,6 +1,6 @@
 .lg.info"TickerPlant Starting";
 
-system"l schemas.q";
+system"l ",.cfg.codeDir,"schemas.q";
 .lg.info"Finished loading schemas";
 
 .z.pc:{.tick.deleteSub[x]};

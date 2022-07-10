@@ -1,6 +1,6 @@
 
 .fh.init:{[]
   .lg.info"Connecting to tickerplant";
-  .fh.tpHandle:hopen .cfg.config[`tickerplant][`port];
+  .fh.tpHandle:.ipc.hopen .cfg.config[`tickerplant][`port];
   .lg.info"Tickerplant connection opened";
   };

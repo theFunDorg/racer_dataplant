@@ -2,11 +2,15 @@
 
 / Set console size
 \c 1000 1000
+
+/ Setting codebase directory
 .cfg.codeDir:("/" sv -1_ "/" vs .z.X[1]),"/";
+
 / Load common files
 system"l ",.cfg.codeDir,"utils.q";
 system"l ",.cfg.codeDir,"log.q";
 system"l ",.cfg.codeDir,"cron.q";
+system"l ",.cfg.codeDir,"ipc.q";
 
 / Parse process inputs
 .cfg,:`$.Q.opt .z.x;
@@ -22,6 +26,7 @@ system "p ",string .proc.port;
 
 / Start process type
 .ut.loadScript[.proc.procType];
+
 / Load each module
 
 / Initialise each module
