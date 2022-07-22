@@ -15,7 +15,14 @@ services:
     working_dir: /
     environment:
       QDIR: /racer_dataplant/qScripts/
+      INTERFACES_DIR: /racer_dataplant/kdbLogs/
+      CONFIG_DIR: /racer_dataplant/config/
+      QROS_DIR: /racer_dataplant/qROS/
+      LOGFILES_DIR: /racer_dataplant/kdbLogs/
+      KDBLOG_DIR: /racer_dataplant/kdbLogs/
     volumes:
       - ./lgdir/:/racer_dataplant/lgdir
       - ./kdbLogs/:/racer_dataplant/kdbLogs
       - ./logOuts/:/racer_dataplant/logOuts
+      - ${ROS2KDB_DIR}/configs:/racer_dataplant/config
+      - ${ROS2KDB_DIR}/q:/racer_dataplant/qROS

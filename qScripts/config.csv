@@ -1,7 +1,7 @@
 procName,procType,port,packages,subscribe,publish
-subROS,feedhandler,5500,ros.q,,computeSense;leftEngineSense;rightEngineSense
+subROS,feedhandler,5500,ros/rosSub.q,,computeSense;leftEngineSense;rightEngineSense
 tickerplant,tick,5501,,,
 engine,rdb,5502,engine.q;engine.q,computeSense;leftEngineSense;rightEngineSense;computeActuate;leftEngineActuate;rightEngineActuate,
 rdb,rdb,5503,,computeSense;leftEngineSense;rightEngineSense;computeActuate;leftEngineActuate;rightEngineActuate,
-pubROS,rdb,5504,ros.q,,computeActuate;leftEngineActuate;rightEngineActuate
-logger,rdb,5505,,,
+pubROS,rdb,5504,ros/rosPub.q,,computeActuate;leftEngineActuate;rightEngineActuate
+logger,rdb,5505,logger.q,,

@@ -38,5 +38,6 @@
 
   funcName:{show x+y}
 
+.cron.init:{system "t 50"}
 // TODO: Add a monadic/polyadic handler function, that get called when the cron function is called 
 // This will provide some execution control to give a .lg.error output so it's clear what's up

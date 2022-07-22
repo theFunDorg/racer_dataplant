@@ -28,5 +28,13 @@ system "p ",string .proc.port;
 .ut.loadScript[.proc.procType];
 
 / Load each module
+{system "l ",.cfg.codeDir,string[x]} each .proc.packages
 
 / Initialise each module
+{[x]
+    ns:` sv `,x;
+    if[`init in key ns;
+      ns[`init][]
+    ];
+  } each key `;
+
