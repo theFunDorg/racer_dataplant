@@ -1,3 +1,4 @@
+// Create cron table
 .cron.tbl:(
     [id:`long$()]
     function:`$();
@@ -5,39 +6,49 @@
     nextRun:`timestamp$();
     interval:`long$();
     repeat:`boolean$()
-    );
+  );
 
 .cron.deleteJobByFunc:{[func]
-  .lg.info"deleting function ",string[func]," from timer";
-  .cron.tbl:delete from .cron.tbl where function=func;
+    .lg.info"deleting function ",string[func]," from timer";
+    .cron.tbl:delete from .cron.tbl where function=func;
   };
 
 .cron.deleteJobByID:{[ID]
-  .lg.info"deleting timer ID ",string[ID]," from timer";
-  .cron.tbl:delete from .cron.tbl where id=ID;
+    .lg.info"deleting timer ID ",string[ID]," from timer";
+    .cron.tbl:delete from .cron.tbl where id=ID;
   };
 
 .cron.runJob:{[i]
-  jobToRun:.cron.tbl[i];
-  jobToRun[`function] . jobToRun[`params];
-  .cron.tbl:$[jobToRun[`repeat];
-    update nextRun:.z.P+interval*`long$1e9 from .cron.tbl;
-    delete from .cron.tbl where id=i
+    jobToRun:.cron.tbl[i];
+    
+    $[1=count jobToRun[`params];
+        @[jobToRun[`function];jobToRun[`params];{.lg.err"JobID: ",string[i],"failed to run with error",string x} ];
+        .[jobToRun[`function];jobToRun[`params];{.lg.err"JobID: ",string[i],"failed to run with error",string x} ]
+    ];
+    .cron.tbl:$[jobToRun[`repeat];
+      update nextRun:.z.P+interval*`long$1e9 from .cron.tbl;
+      delete from .cron.tbl where id=i
     ];
   };
 
 .cron.addJob:{[args]
-  id:1+count .cron.tbl;
-  `.cron.tbl upsert(id;`funcName;5 9;.z.P;5;1b)
+  .lg.info "Adding job with details:";
+  show args;
+  `.cron.tbl upsert(
+    1+count .cron.tbl;
+    args`funcName; 
+    args`inputs;
+    args`nextRun;
+    args`interval;
+    args`repeat
+  );
   };
 
 .z.ts:{[]
-  ids:exec id from .cron.tbl where nextRun<.z.P;
-  .cron.runJob each ids;
+    ids:exec id from .cron.tbl where nextRun<.z.P;
+    .cron.runJob each ids;
   };
 
-  funcName:{show x+y}
+funcName:{show x+y};
 
-.cron.init:{system "t 50"}
-// TODO: Add a monadic/polyadic handler function, that get called when the cron function is called 
-// This will provide some execution control to give a .lg.error output so it's clear what's up
+.cron.init:{system "t 50"};

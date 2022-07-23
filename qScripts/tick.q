@@ -3,11 +3,10 @@
 system"l ",.cfg.codeDir,"schemas.q";
 .lg.info"Finished loading schemas";
 
-.z.pc:{.tick.deleteSub[x]};
-
 .tick.init:{
   .tick.tblCounts:tables[]!count each get each tables[];
   .tick.subscribers::t!(count t::tables`.)#();
+  .ipc.zpcFuncs,:`.tick.deleteSub;
   };
 
 .tick.deleteSub:{[handle]
@@ -30,5 +29,3 @@ system"l ",.cfg.codeDir,"schemas.q";
   ];
   {[hndl;tbl;data]hndl(`upd;tbl;data)}[;tbl;data] each .tick.subscribers[tbl];
   };
-
-.tick.init[];

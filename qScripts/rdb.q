@@ -27,6 +27,4 @@ upd:upsert;
   .lg.info"Subscribing and getting schemas";
   .rdb.subscribe`;
   .lg.info"Subscription completed";
-
   };
-.rdb.init`;
